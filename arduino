@@ -1,0 +1,399 @@
+#include <Wire.h>
+#include<LiquidCrystal_I2C.h>
+
+// Alterar o endereço conforme modulo I2C
+LiquidCrystal_I2C lcd(0x27, 2,1,0,4,5,6,7,3, POSITIVE); 
+
+#define BotA 2
+#define BotB 3
+#define BotC 4
+#define BotD 5
+
+int nQuestao = 10;
+int array[20];
+int ponto = 0;
+  
+void setup(){
+  pinMode(BotA, INPUT_PULLUP);
+  pinMode(BotB, INPUT_PULLUP);
+  pinMode(BotC, INPUT_PULLUP);
+  pinMode(BotD, INPUT_PULLUP);
+  
+  lcd.begin(20, 4);
+  lcd.clear();
+  lcd.setCursor(0,0);
+  
+  lcd.print("Seja Bem Vindo!");
+  Serial.begin(9600);
+  delay(2000);
+  lcd.clear();
+  
+  geraSequencia();
+}
+
+void loop(){
+ponto = 0;
+  for (int i = 0; i < nQuestao; i++){
+    SelecionaQuestao(array[i]);
+  }
+  
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Fim de Jogo!");
+  
+  delay(2000);
+}
+
+
+void SelecionaQuestao(int nQuestao){
+  
+  switch(nQuestao){
+    case 0:
+      lcd.clear();
+      lcd.setCursor(0,0);
+      lcd.print("Quem fez o papel do ");
+      lcd.setCursor(0,1);
+  lcd.print("Comandante Cody?");
+  lcd.setCursor(0,2);
+  lcd.print("A)Jay B)Temuera");
+  lcd.setCursor(0,3);
+  lcd.print("C)Ahmed D)Joel");
+      
+    if(AnalisaBotao()=='B'){
+          lcd.setCursor(0,1);
+          lcd.clear();
+          lcd.print("Correto!");
+         delay(500);
+          
+        }else{
+          lcd.setCursor(0,1);
+          lcd.clear();
+          lcd.print("Errado!");
+          delay(500);
+        }
+    break;
+    case 1:
+      lcd.clear();
+      lcd.setCursor(0,0);
+      lcd.print("Onde as Guerras Clo-");
+      lcd.setCursor(0,1);
+  lcd.print("nicas comecaram?");
+  lcd.setCursor(0,2);
+  lcd.print("A)Naboo B)Geonosis");
+  lcd.setCursor(0,3);
+  lcd.print("C)Terra D)Cacto");
+      if(AnalisaBotao()=='B'){
+          lcd.setCursor(0,1);
+          lcd.clear();
+          lcd.print("Correto!");
+          delay(500);
+        }else{
+          lcd.setCursor(0,1);
+          lcd.clear();
+          lcd.print("Errado!");
+          delay(500);
+        }
+    break;
+    case 2:
+      lcd.clear();
+      lcd.setCursor(0,0); 
+      lcd.print("Qual a arma do");
+      lcd.setCursor(0,1);
+      lcd.print("Chewbacca?");
+      lcd.setCursor(0,2);
+  lcd.print("A)Blaster B)Sabre");
+  lcd.setCursor(0,3);
+  lcd.print("C)Bastao D)Bowcaster");
+        if(AnalisaBotao()=='D'){
+          lcd.setCursor(0,1);
+          lcd.clear();
+          lcd.print("Correto!");
+          delay(500);
+        }else{
+          lcd.setCursor(0,1);
+          lcd.clear();
+          lcd.print("Errado!");
+          delay(500);
+        }
+    break;
+    case 3:
+      lcd.clear();
+      lcd.setCursor(0,0);
+      lcd.print("Quem disse: Eu esco");
+      lcd.setCursor(0,1);
+  lcd.print("lho viver para o meu");
+  lcd.setCursor(0,2);
+  lcd.print(" povo?");
+  lcd.setCursor(0,3);
+  lcd.print("A) Riyo B) Lucas");
+        if(AnalisaBotao()=='A'){
+          lcd.setCursor(0,1);
+          lcd.clear();
+          lcd.print("Correto!");
+          delay(500);
+        }else{
+          lcd.setCursor(0,1);
+          lcd.clear();
+          lcd.print("Errado!");
+          delay(500);
+        }
+    break;
+    case 4:
+      lcd.clear();
+      lcd.setCursor(0,0);
+      lcd.print("Que tipo de veiculo");
+      lcd.setCursor(0,1);
+      lcd.print("Rey usa como casa?");
+  lcd.setCursor(0,2);
+  lcd.print("A)Mon Calimari B)AT-AT");
+  lcd.setCursor(0,3);
+  lcd.print("C)Kombi D)Polsa");
+        if(AnalisaBotao()=='B'){
+          lcd.setCursor(0,1);
+          lcd.clear();
+          lcd.print("Correto!");
+          delay(500);
+        }else{
+          lcd.setCursor(0,1);
+          lcd.clear();
+          lcd.print("Errado!");
+          delay(500);
+        }
+    break;
+    case 5:
+      lcd.clear();
+      lcd.setCursor(0,0);
+      lcd.print("Quem matou o Jabba?");
+      lcd.setCursor(0,1);
+  lcd.print("A)Han Solo B)C-3PO");
+  lcd.setCursor(0,2);
+  lcd.print("C)Luke D)Leia");
+        if(AnalisaBotao()=='D'){
+          lcd.setCursor(0,1);
+          lcd.clear();
+          lcd.print("Correto!");
+          delay(500);
+        }else{
+          lcd.setCursor(0,1);
+          lcd.clear();
+          lcd.print("Errado!");
+          delay(500);
+        }
+    break;
+    case 6:
+      lcd.clear();
+      lcd.setCursor(0,0);
+      lcd.print("Quem matou Jango?");
+      lcd.setCursor(0,1);
+  lcd.print("A)Mance B)Anakin");
+  lcd.setCursor(0,2);
+  lcd.print("C)Obi-Wan D)Yoda");
+        if(AnalisaBotao()=='A'){
+          lcd.setCursor(0,1);
+          lcd.clear();
+          lcd.print("Correto!");
+          delay(500);
+        }else{
+          lcd.setCursor(0,1);
+          lcd.clear();
+          lcd.print("Errado!");
+          delay(500);
+        }
+    break;
+    case 7:
+      lcd.clear();
+      lcd.setCursor(0,0);
+      lcd.print("Qual era a especie ");
+      lcd.setCursor(0,1);
+  lcd.print("do Yoda?");
+  lcd.setCursor(0,2);
+  lcd.print("A)Desconhecido B)Lul");
+  lcd.setCursor(0,3);
+  lcd.print("C)Yolar D)Bru");
+        if(AnalisaBotao()=='A'){
+          lcd.setCursor(0,1);
+          lcd.clear();
+          lcd.print("Correto!");
+          delay(500);
+        }else{
+          lcd.setCursor(0,1);
+          lcd.clear();
+          lcd.print("Errado!");
+          delay(500);
+        }
+    break;
+    case 8:
+      lcd.clear();
+      lcd.setCursor(0,0);
+      lcd.print("Em que ano foi a");
+      lcd.setCursor(0,1);
+  lcd.print("primeira aparicao do");
+  lcd.setCursor(0,2);
+  lcd.print("BB-8 A)2010");
+  lcd.setCursor(0,3);
+  lcd.print("B)2015 C)2000");
+        if(AnalisaBotao()=='B'){
+          lcd.setCursor(0,1);
+          lcd.clear();
+          lcd.print("Correto!");
+          delay(500);
+        }else{
+          lcd.setCursor(0,1);
+          lcd.clear();
+          lcd.print("Errado!");
+          delay(500);
+        }
+    break;
+    case 9:
+      lcd.clear();
+      lcd.setCursor(0,0);
+      lcd.print("Quem se ofereceu pra");
+      lcd.setCursor(0,1);
+  lcd.print("liderar o ataque co");
+  lcd.setCursor(0,2);
+  lcd.print("ntra a Estrela da ");
+  lcd.setCursor(0,3);
+  lcd.print("Morte? A)Han B)Lando");
+      if(AnalisaBotao()=='B'){
+          lcd.setCursor(0,1);
+          lcd.clear();
+          lcd.print("Correto!");
+          delay(500);
+        }else{
+          lcd.setCursor(0,1);
+          lcd.clear();
+          lcd.print("Errado!");
+          delay(500);
+        }
+    break;
+    case 10:
+      lcd.clear();
+      lcd.setCursor(0,0);
+      lcd.print("Qual a especie do --");
+      lcd.setCursor(0,1);
+      lcd.print("Chewbacca?");
+      lcd.setCursor(0,2);
+      lcd.print("A)Rodian B)Wokie");
+      lcd.setCursor(0,3);
+      lcd.print("C)Ewok D)Lulu");
+      if(AnalisaBotao()=='B'){
+          lcd.setCursor(0,1);
+          lcd.clear();
+          lcd.print("Correto!");
+          delay(500);
+        }else{
+          lcd.setCursor(0,1);
+          lcd.clear();
+          lcd.print("Errado!");
+          delay(500);
+        }
+ break;
+    case 11:
+      lcd.clear();
+      lcd.setCursor(0,0);
+      lcd.print("O que os Ewoks pensa");
+      lcd.setCursor(0,1);
+      lcd.print("ram que o C-3PO era?");
+  lcd.setCursor(0,2);
+      lcd.print("A)Deus B)fantasma");
+      lcd.setCursor(0,3);
+      lcd.print("C)Porco D)Rato");
+      if(AnalisaBotao()=='A'){
+          lcd.setCursor(0,1);
+          lcd.clear();
+          lcd.print("Correto!");
+          delay(500);
+        }else{
+          lcd.setCursor(0,1);
+          lcd.clear();
+          lcd.print("Errado!");
+          delay(500);
+  }
+  break;
+    case 12:
+      lcd.clear();
+      lcd.setCursor(0,0);
+      lcd.print("Qual o nome de batis");
+      lcd.setCursor(0,1);
+      lcd.print("mo do Kylo Ren?");
+      lcd.setCursor(0,2);
+      lcd.print("A)Caio B)Pedro");
+      lcd.setCursor(0,3);
+      lcd.print("C)Ben D)Jhon");
+      if(AnalisaBotao()=='C'){
+          lcd.setCursor(0,1);
+          lcd.clear();
+          lcd.print("Correto!");
+          delay(500);
+        }else{
+          lcd.setCursor(0,1);
+          lcd.clear();
+          lcd.print("Errado!");
+          delay(500);
+  }
+  
+  break;
+    case 13:
+      lcd.clear();
+      lcd.setCursor(0,0);
+      lcd.print("Quem dirigiu O Retor");
+        lcd.setCursor(0,1);
+  lcd.print("-no de Jedi?");
+  lcd.setCursor(0,2);      
+  lcd.print("A)Gabriel B)Richard");
+  lcd.setCursor(0,3);
+  lcd.print("C)Joao D)Paulo");
+      if(AnalisaBotao()=='B'){
+          lcd.setCursor(0,1);
+          lcd.clear();
+          lcd.print("Correto!");
+          delay(500);
+        }else{
+          lcd.setCursor(0,1);
+          lcd.clear();
+          lcd.print("Errado!");
+          delay(500);
+  }
+  }
+  
+}
+
+char AnalisaBotao(){
+  bool BotaoPressionado = true;
+  
+  while(BotaoPressionado){
+    if(!digitalRead(BotA)){
+      BotaoPressionado = false;
+      delay(700);
+      return 'A';
+    }else if(!digitalRead(BotB)){
+      BotaoPressionado = false;
+      delay(700);
+      return 'B';
+    }else if(!digitalRead(BotC)){
+      BotaoPressionado = false;
+      delay(700);
+      return 'C';
+    }else if(!digitalRead(BotD)){
+      BotaoPressionado = false;
+      delay(700);
+      return 'D';
+    }
+  }
+}
+
+
+
+void geraSequencia(){
+  randomSeed(random(0, 1000));
+  for (int i = 0; i < nQuestao; i++){     
+    array[i] = i;
+  }
+ 
+  for (int i = 0; i < nQuestao; i++) {    
+    int temp = array[i];
+    int novoIndice = random(nQuestao);
+    array[i] = array[novoIndice];
+    array[novoIndice] = temp;
+  }
+}
